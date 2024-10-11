@@ -4,7 +4,6 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
 
 	"github.com/aliamerj/cup-cli/pkg/show/status"
 	"github.com/spf13/cobra"
@@ -12,6 +11,7 @@ import (
 
 // statusCmd represents the status command
 var statusCmd = &cobra.Command{
+	Use:   "status",
 	Short: "Show whether Cloud-Cup is running or stopped.",
 	Long: `The 'status' command displays the current operational state of the Cloud-Cup server.
 It checks if the Cloud-Cup reverse proxy is actively running or if it's stopped.
@@ -24,11 +24,9 @@ Example usage:
 Output:
   - "Cloud-Cup is running" when the server is active.
   - "Cloud-Cup is NOT running" if the server is stopped.`,
+
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := status.ShowStatus(); err != nil {
-			fmt.Println("Cloud-Cup is NOT running")
-			return
-		}
+		status.ShowStatus()
 	},
 }
 
