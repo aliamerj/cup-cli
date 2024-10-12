@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
+	command "github.com/aliamerj/cup-cli/internal/cmd"
 	"github.com/aliamerj/cup-cli/internal/style"
-	"github.com/aliamerj/cup-cli/internal/uds"
 	"github.com/fatih/color"
 )
 
@@ -29,7 +29,7 @@ type Config struct {
 func ShowConfig() {
 	style.PrintBanner()
 
-  blue := color.New(color.FgHiBlue).SprintFunc()
+	blue := color.New(color.FgHiBlue).SprintFunc()
 	green := color.New(color.FgGreen).SprintFunc()
 	bold := color.New(color.Bold).SprintFunc()
 
@@ -39,9 +39,9 @@ func ShowConfig() {
 	time.Sleep(1 * time.Second)
 	fmt.Println(green(" Done! ✅\n"))
 
-	data, err := getJsonData()
+	data, err := command.CmdCall("show-config")
 	if err != nil {
-    fmt.Println(color.RedString("❌ Cloud-Cup is currently offline"))
+		fmt.Println(color.RedString("❌ Cloud-Cup is currently offline"))
 		os.Exit(1)
 	}
 
@@ -70,23 +70,4 @@ func ShowConfig() {
 	// Final note
 	fmt.Println("\n✅ Configuration loaded successfully.")
 
-
-}
-
-func getJsonData() (string, error) {
-	conn, err := uds.EstablishConnectionUDS()
-	if err != nil {
-		return "", err
-	}
-	defer conn.Close()
-
-	if err := uds.SendRequest(conn, "show-config\n"); err != nil {
-		return "", err
-	}
-	responseData := make([]byte, 1024*1024)
-	n, err := conn.Read(responseData)
-	if err != nil {
-		return "", err
-	}
-	return string(responseData[:n]), nil
 }

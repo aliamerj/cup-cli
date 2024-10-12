@@ -4,7 +4,6 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-
 	"github.com/aliamerj/cup-cli/pkg/show/config"
 	"github.com/spf13/cobra"
 )
@@ -12,13 +11,10 @@ import (
 // configCmd represents the config command
 var configCmd = &cobra.Command{
 	Use:   "config",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Display the current Cloud-Cup configuration",
+	Long: `Display detailed information about the current Cloud-Cup server configuration, 
+including root server settings, routing rules, and backend strategies. 
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		config.ShowConfig()
 	},
