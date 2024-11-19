@@ -21,8 +21,14 @@ type Route struct {
 	Strategy string    `json:"strategy,omitempty"`
 }
 
+type SSL struct {
+	SSLCertificate     string `json:"ssl_certificate"`
+	SSLCertificateKey  string `json:"ssl_certificate_key"`
+}
+
 type Config struct {
 	Root   string           `json:"root"`
+	SSL    *SSL             `json:"ssl,omitempty"` // SSL field is optional
 	Routes map[string]Route `json:"routes"`
 }
 
@@ -46,14 +52,21 @@ func ShowConfig() {
 	}
 
 	var config Config
-	errm := json.Unmarshal([]byte(data), &config)
-	if errm != nil {
+	err = json.Unmarshal([]byte(data), &config)
+	if err != nil {
 		fmt.Println(color.RedString("❌ Failed to parse config data: %v", err))
 		os.Exit(1)
 	}
 
 	// Display the root server
 	fmt.Printf("%s: %s\n", blue("🔗 Root Server"), green(config.Root))
+
+	// Display SSL configuration if present
+	if config.SSL != nil {
+		fmt.Println(bold("\n🔐 SSL Configuration"))
+		fmt.Printf("   %s: %s\n", blue("SSL Certificate"), green(config.SSL.SSLCertificate))
+		fmt.Printf("   %s: %s\n", blue("SSL Certificate Key"), green(config.SSL.SSLCertificateKey))
+	}
 
 	// Loop through routes and display in a more visually appealing way
 	for route, routeData := range config.Routes {
@@ -69,5 +82,5 @@ func ShowConfig() {
 
 	// Final note
 	fmt.Println("\n✅ Configuration loaded successfully.")
-
 }
+
