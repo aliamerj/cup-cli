@@ -6,23 +6,38 @@
 </div>
 
 
+**Cup** is a command-line interface (CLI) tool designed to manage and interact with Cloud-Cup, providing an easy way to monitor, configure, and maintain your Cloud-Cup reverse proxy instance.
 
+The CLI includes commands to check the status, view configurations, test backends and routes, and apply new configurations.
 
-**Cup** is a command-line interface (CLI) tool designed to manage and interact with Cloud-Cup, a high-performance reverse proxy built for cloud-native microservices. This tool simplifies managing Cloud-Cup, making it easier to monitor, configure, and control your server without downtime.
+## Usage
 
-Whether you're an operations engineer maintaining production environments or a developer running a local instance of Cloud-Cup, this CLI tool provides an intuitive way to manage your proxy servers and backend configurations.
+Here are the commands you can use with cup-cli:
+1. Shows whether the Cloud-Cup application is running or not.
+```bash
+cup show status
+```
+2. Displays the current configuration the application is running with.
+```bash
+cup show config
+```
+4. Checks the health of all backend servers.
+```bash
+cup check
+```
+6. Checks the health of a specific backend server by its address.
+```bash
+cup check -b <backend address>
+```
+8. Checks whether the specified route is functioning properly.
+```bash
+cup check -r <route name>
+```
+10. Applies a new configuration file and performs a hot reload of the application with the changes.
+```bash
+cup apply -f <file path>
+```
 
-### 🚀  While Cup is still in its early stages of development, here’s what you can do and what's planned:
-- **Monitor Server Status**: Check whether Cloud-Cup is currently running or stopped.
-- **Reload Configurations**: Update the Cloud-Cup configuration file on-the-fly without restarting the server.
-- **View Backend Information**: Inspect individual backend servers or the entire cluster for debugging and monitoring.
-- **Health Check**: Monitor the health and performance of Cloud-Cup and backend servers.
-- **Automatic SSL/TLS Setup**: Configure and manage SSL certificates through the configuration file.
-- **Hot Reloading**: Apply configuration changes without interrupting service.
-- **Multitude of HTTP Versions Support**: Handle HTTP/1.1, HTTP/2, and HTTP/3 protocols.
+## Contributing
 
-# 🎯 Current Status
-
-Right now, the Cup CLI tool is in its early stages with basic functionality for checking whether the Cloud-Cup server is running. More features will be rolled out in the coming weeks to enhance its capabilities for managing and controlling the Cloud-Cup proxy server.
-
-Stay tuned for more updates and expanded functionality as development continues!
+We welcome contributions to enhance cup-cli. Feel free to open issues, suggest new features, or submit pull requests!
